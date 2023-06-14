@@ -1,5 +1,6 @@
 import * as express from 'express';
-import router from './router/TeamRouter';
+import TeamRouter from './router/TeamRouter';
+import UserRouter from './router/UserRouter';
 
 class App {
   public app: express.Express;
@@ -9,7 +10,9 @@ class App {
 
     this.config();
 
-    this.routes();
+    this.app.use(TeamRouter);
+
+    this.app.use(UserRouter);
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));
   }
@@ -30,9 +33,9 @@ class App {
     this.app.listen(PORT, () => console.log(`Running on port ${PORT}`));
   }
 
-  private routes(): void {
-    this.app.use(router);
-  }
+  // private routes(): void {
+  //   this.app.use(router);
+  // }
 }
 
 export { App };

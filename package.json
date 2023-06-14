@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "async": "^3.2.4",
+    "bcrypt": "^5.1.0",
     "camelcase": "6.3.0",
     "errors": "^0.3.0",
     "expresss": "^0.0.0",
