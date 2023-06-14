@@ -28,7 +28,10 @@
     "sequelize-cli": "6.4.1"
   },
   "dependencies": {
+    "async": "^3.2.4",
     "camelcase": "6.3.0",
+    "errors": "^0.3.0",
+    "expresss": "^0.0.0",
     "http-status-codes": "2.2.0",
     "jsonwebtoken": "8.5.1",
     "puppeteer": "13.2.0",
