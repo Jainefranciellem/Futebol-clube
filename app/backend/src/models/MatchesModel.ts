@@ -12,11 +12,11 @@ export default class MatchModel {
       include: [
         { model: TeamModel, as: 'homeTeam', attributes: ['teamName'] },
         { model: TeamModel, as: 'awayTeam', attributes: ['teamName'] },
-      ] });
+      ] }) as unknown as IMatches[];
     return dbData.map(({
-      id, homeTeamId, homeTeamGoals, awayTeamId, awayTeamGoals, inProgress,
+      id, homeTeamId, homeTeamGoals, awayTeamId, awayTeamGoals, inProgress, homeTeam, awayTeam,
     }) => (
-      { id, homeTeamId, homeTeamGoals, awayTeamId, awayTeamGoals, inProgress }
+      { id, homeTeamId, homeTeamGoals, awayTeamId, awayTeamGoals, inProgress, homeTeam, awayTeam }
     ));
   }
 }
