@@ -15,7 +15,7 @@ userRouter.post(
 );
 
 userRouter.get(
-  '/role',
+  '/login/role',
   ValidateToken,
   (_req: Request, res: Response) => res.status(200).json({ role: res.locals.user.role }),
 );
