@@ -5,8 +5,8 @@ import TeamModel from '../database/models/TeamsModel';
 export default class MatchModel {
   model = MatchesModel;
 
-  async findAll(query: boolean): Promise<IMatches[]> {
-    const inProgressBolean = query === null ? {} : { inProgress: query };
+  async findAll(query?: boolean): Promise<IMatches[]> {
+    const inProgressBolean = query === undefined ? {} : { inProgress: query };
     const dbData = await this.model.findAll({
       where: inProgressBolean,
       include: [
