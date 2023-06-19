@@ -20,8 +20,21 @@ export default class MatchModel {
     ));
   }
 
-  async update(id: number): Promise<number> {
+  async updateFinish(id: number): Promise<number> {
     const [affectedRows] = await this.model.update({ inProgress: false }, { where: { id } });
+    return affectedRows;
+  }
+
+  async update(
+    id: number,
+    homeTeamGoals:
+    IMatches['homeTeamGoals'],
+    awayTeamGoals: IMatches['awayTeamGoals'],
+  ): Promise<number> {
+    const [affectedRows] = await this.model.update({
+      homeTeamGoals,
+      awayTeamGoals,
+    }, { where: { id } });
     return affectedRows;
   }
 }

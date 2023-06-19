@@ -8,6 +8,9 @@ const TeamRouter = Router();
 
 TeamRouter.get('/', (req: Request, res: Response) => MatchesController.getAllMatches(req, res));
 TeamRouter.patch('/:id/finish', ValidateToken, (req: Request, res: Response) =>
-  MatchesController.updateMatches(req, res));
+  MatchesController.finishMatches(req, res));
+
+TeamRouter.patch('/:id', ValidateToken, (req: Request, res: Response) =>
+  MatchesController.update(req, res));
 
 export default TeamRouter;
