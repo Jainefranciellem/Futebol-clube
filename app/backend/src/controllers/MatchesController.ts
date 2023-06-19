@@ -29,4 +29,10 @@ export default class MatchesController {
     const { data } = await this.MatchService.updateFinish(Number(id));
     return res.status(200).json(data);
   }
+
+  public async create(req: Request, res: Response): Promise<Response> {
+    console.log('CONTROLLER', req.body);
+    const { data } = await this.MatchService.create(req.body);
+    return res.status(201).json(data);
+  }
 }

@@ -13,4 +13,7 @@ TeamRouter.patch('/:id/finish', ValidateToken, (req: Request, res: Response) =>
 TeamRouter.patch('/:id', ValidateToken, (req: Request, res: Response) =>
   MatchesController.update(req, res));
 
+TeamRouter.post('/', ValidateToken, (req: Request, res: Response) =>
+  MatchesController.create(req, res));
+
 export default TeamRouter;

@@ -25,4 +25,9 @@ export default class MatchesService {
     await this.MatchModel.update(id, homeTeamGoals, awayTeamGoals);
     return { status: 'SUCCESSFUL', data: { message: 'Updated' } };
   }
+
+  public async create(data: IMatches): Promise<ServiceResponse<IMatches>> {
+    const dataMatchs = await this.MatchModel.create({ ...data, inProgress: true });
+    return { status: 'SUCCESSFUL', data: dataMatchs };
+  }
 }

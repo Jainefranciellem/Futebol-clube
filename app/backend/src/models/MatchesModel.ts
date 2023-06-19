@@ -37,4 +37,9 @@ export default class MatchModel {
     }, { where: { id } });
     return affectedRows;
   }
+
+  async create(data: IMatches): Promise<IMatches> {
+    const dbData = await this.model.create(data);
+    return dbData;
+  }
 }
