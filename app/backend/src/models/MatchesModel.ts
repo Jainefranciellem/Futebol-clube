@@ -19,4 +19,9 @@ export default class MatchModel {
       { id, homeTeamId, homeTeamGoals, awayTeamId, awayTeamGoals, inProgress, homeTeam, awayTeam }
     ));
   }
+
+  async update(id: number): Promise<number> {
+    const [affectedRows] = await this.model.update({ inProgress: false }, { where: { id } });
+    return affectedRows;
+  }
 }
