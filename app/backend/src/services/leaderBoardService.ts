@@ -1,25 +1,15 @@
 import sequelize = require('sequelize');
 import TeamModel from '../database/models/TeamsModel';
 import MatchModel from '../database/models/MatchesModel';
-import { ISequelizeLeaderboard } from '../Interfaces/ILeaderBoard';
-// import Matches from '../database/models/MatchesModel';
-// import IMatches from '../Interfaces/IMatches';
-// import ITeam from '../Interfaces/ITeam';
-// import ILeaderboard from '../Interfaces/ILeaderBoard';
-
-// type leader = Required<IMatches>;
+import { ILeaderboard, ISequelizeLeaderboard } from '../Interfaces/ILeaderBoard';
+// import querySequelize from '../utils/leaderBoardMySql';
+// import querySequelize from '../utils/leaderBoardMySql';
 
 export default class LeaderBoardService {
   constructor(
     private matchModel = MatchModel,
     private teamModel = TeamModel,
   ) { }
-
-  static calculateHomePoints(homeTeamGoals: number, awayTeamGoals: number): number {
-    if (homeTeamGoals > awayTeamGoals) return 3;
-    if (homeTeamGoals === awayTeamGoals) return 1;
-    return 0;
-  }
 
   public async getHome() {
     const allMatchs = await this.matchModel.findAll({
@@ -41,9 +31,8 @@ export default class LeaderBoardService {
     return allMatchs.map(({ dataValues }) => dataValues) as unknown as ISequelizeLeaderboard[];
   }
 
-  public async homeLeaderBoard() {
-    const matchs = await this.getHome();
-    const leaderBoard = matchs.map((match) => ({
+  public async homeLeaderBoard(): Promise<ILeaderboard[]> {
+    const leaderBoard = (await this.getHome()).map((match) => ({
       name: match.homeTeam.teamName,
       totalPoints: Number(match.totalVictories) * 3 + Number(match.totalDraws),
       totalGames: Number(match.totalGames),
@@ -52,7 +41,24 @@ export default class LeaderBoardService {
       totalDraws: Number(match.totalDraws),
       goalsFavor: Number(match.goalsFavor),
       goalsOwn: Number(match.goalsOwn),
-    }));
-    return leaderBoard;
+      goalsBalance: Number(match.goalsFavor) - Number(match.goalsOwn),
+      efficiency: LeaderBoardService
+        .efficiency(match.totalGames, match.totalVictories, match.totalDraws) }));
+    return leaderBoard.sort((a, b) => {
+      if (a.totalPoints !== b.totalPoints) return b.totalPoints - a.totalPoints;
+      if (a.totalVictories !== b.totalVictories) return b.totalVictories - a.totalVictories;
+      if (a.goalsBalance !== b.goalsBalance) return b.goalsBalance - a.goalsBalance;
+      return b.goalsFavor - a.goalsFavor;
+    });
+  }
+
+  static efficiency(
+    totalGames: number,
+    totalVictories: number,
+    totalDraws: number,
+  ): number {
+    return Number((((
+      Number(totalVictories) * 3 + Number(totalDraws)) / (
+      Number(totalGames) * 3)) * 100).toFixed(2));
   }
 }

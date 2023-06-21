@@ -12,6 +12,7 @@ export type ILeaderboard = {
 };
 
 export type ISequelizeLeaderboard = {
+  totalPoints: number,
   totalGames: number,
   totalVictories: number,
   totalLosses: number,
