@@ -8,6 +8,7 @@ const MatchesController = new MatchController();
 const TeamRouter = Router();
 
 TeamRouter.get('/', (req: Request, res: Response) => MatchesController.getAllMatches(req, res));
+
 TeamRouter.patch('/:id/finish', ValidateToken, (req: Request, res: Response) =>
   MatchesController.finishMatches(req, res));
 
