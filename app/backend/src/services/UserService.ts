@@ -15,6 +15,7 @@ export default class UserService {
 
   public async login(data: ILogin): Promise<ServiceResponse<ServiceMessage | IToken>> {
     const user = await this.userModel.findAll(data.email);
+    console.log(user);
     if (user) {
       if (!bcrypt.compareSync(data.password, user.password)) {
         return { status: 'INVALID_DATA', data: { message: 'Invalid email or password' } };

@@ -2,8 +2,6 @@ import sequelize = require('sequelize');
 import TeamModel from '../database/models/TeamsModel';
 import MatchModel from '../database/models/MatchesModel';
 import { ILeaderboard, ISequelizeLeaderboard } from '../Interfaces/ILeaderBoard';
-// import querySequelize from '../utils/leaderBoardMySql';
-// import querySequelize from '../utils/leaderBoardMySql';
 
 export default class LeaderBoardService {
   constructor(
